@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlanYourTrip - Hotels, Flights, Holidays & More</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-gray: #f1f5f9;
+            --white: #ffffff;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #fafafa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* ══════════════════════════════════════════════ */
+        /* HEADER */
+        /* ══════════════════════════════════════════════ */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .top-bar {
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 8px 0;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        
+        .nav-link:hover { color: var(--primary); }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-accent:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+        }
+        
+        /* ══════════════════════════════════════════════ */
+        /* HERO SECTION */
+        /* ══════════════════════════════════════════════ */
+        .hero {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+            color: white;
+            padding: 140px 60px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.05)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,101.3C1248,85,1344,75,1392,69.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+        
+        .hero h1 em {
+            color: var(--accent);
+            font-style: normal;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 50px;
+        }
+        
+        /* ══════════════════════════════════════════════ */
+        /* SEARCH BOX */
+        /* ══════════════════════════════════════════════ */
+        .search-container {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .search-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 28px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0;
+        }
+        
+        .search-tab {
+            padding: 12px 24px;
+            border: none;
+            background: transparent;
+            color: var(--gray);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .search-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .search-tab:hover:not(.active) {
+            color: var(--dark);
+        }
+        
+        .search-form {
+            display: none;
+        }
+        
+        .search-form.active {
+            display: block;
+        }
+        
+        .trip-type {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .trip-type label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .trip-type input[type="radio"] {
+            cursor: pointer;
+        }
+        
+        .search-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .form-input {
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s;
+            background: #f8fafc;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+        }
+        
+        .search-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent), #f59e0b);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 12px;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(245,158,11,0.3);
+        }
+        
+        /* ══════════════════════════════════════════════ */
+        /* PROMO BANNER */
+        /* ══════════════════════════════════════════════ */
+        .promo-banner {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 16px 60px;
+            overflow: hidden;
+        }
+        
+        .promo-scroll {
+            display: flex;
+            gap: 40px;
+            animation: scroll 30s linear infinite;
+            white-space: nowrap;
+        }
+        
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .promo-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #92400e;
+        }
+        
+        .promo-badge {
+            background: #ef4444;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        
+        /* ══════════════════════════════════════════════ */
+        /* LOYALTY SECTION */
+        /* ══════════════════════════════════════════════ */
+        .loyalty-section {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            padding: 40px 60px;
+            margin: 60px;
+            border-radius: 20px;
+            display: none;
+        }
+        
+        .loyalty-section.show {
+            display: flex;
+        }
+        
+        .loyalty-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .loyalty-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+        
+        .points-display {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 12px 0;
+        }
+        
+        .tier-progress {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+        
+        .tier-bar {
+            background: white;
+            height: 100%;
+            width: 49%;
+            border-radius: 4px;
+        }
+        
+        /* ══════════════════════════════════════════════ */
+        /* QUICK LINKS */
+        /* ══════════════════════════════════════════════ */
+        .quick-links {
+            padding: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+        }
+        
+        .link-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .link-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .link-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+        
+        .link-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        /* ══════════════════════════════════════════════ */
+        /* DESTINATIONS */
+        /* ══════════════════════════════════════════════ */
+        .destinations {
+            padding: 60px;
+            background: white;
+        }
+        
+        .dest-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .dest-card {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .dest-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+        
+        .dest-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .dest-info {
+            padding: 20px;
+        }
+        
+        .dest-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+        
+        .dest-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .dest-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--accent);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        
+        /* ══════════════════════════════════════════════ */
+        /* MODAL */
+        /* ══════════════════════════════════════════════ */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            padding: 28px 32px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .modal-subtitle {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-top: 6px;
+        }
+        
+        .modal-body {
+            padding: 32px;
+        }
+        
+        .modal-form .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .modal-form .form-label {
+            text-transform: none;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .modal-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .modal-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        
+        .social-btn:hover {
+            border-color: var(--primary);
+            background: #f8fafc;
+        }
+        
+        /* ══════════════════════════════════════════════ */
+        /* RESULTS PAGE */
+        /* ══════════════════════════════════════════════ */
+        .results-page {
+            display: none;
+            padding: 120px 60px 60px;
+            min-height: 100vh;
+        }
+        
+        .results-page.show {
+            display: block;
+        }
+        
+        .results-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+        }
+        
+        .filters {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+        
+        .filter-section {
+            margin-bottom: 28px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .filter-section:last-child {
+            border-bottom: none;
+        }
+        
+        .filter-title {
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+        
+        .results-main {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .results-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+        
+        .results-count {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+        
+        .sort-select {
+            padding: 10px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+        }
+        
+        .result-item {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 24px;
+            align-items: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .result-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateX(4px);
+        }
+        
+        .result-logo {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        .result-details h4 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+        
+        .result-meta {
+            display: flex;
+            gap: 16px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .result-price {
+            text-align: right;
+        }
+        
+        .price-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .book-btn {
+            padding: 12px 28px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .book-btn:hover {
+            background: #d97706;
+            transform: scale(1.05);
+        }
+        
+        /* ══════════════════════════════════════════════ */
+        /* DASHBOARD */
+        /* ══════════════════════════════════════════════ */
+        .dashboard-page {
+            display: none;
+            padding: 120px 60px 60px;
+            min-height: 100vh;
+        }
+        
+        .dashboard-page.show {
+            display: block;
+        }
+        
+        .dashboard-header {
+            margin-bottom: 32px;
+        }
+        
+        .dashboard-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .dashboard-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .dashboard-tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+        
+        .dashboard-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .bookings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+        
+        .booking-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 16px;
+        }
+        
+        .booking-type {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .type-flight {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .type-hotel {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .booking-status {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .status-confirmed {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .booking-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+        
+        .booking-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .booking-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 16px 0;
+        }
+        
+        .booking-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+        
+        /* ══════════════════════════════════════════════ */
+        /* TOAST */
+        /* ══════════════════════════════════════════════ */
+        .toast {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 3000;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .toast.show {
+            display: flex;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(400px); }
+            to { transform: translateX(0); }
+        }
+        
+        .toast-icon {
+            font-size: 1.5rem;
+        }
+        
+        .toast-content h4 {
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        
+        .toast-content p {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        
+        /* ══════════════════════════════════════════════ */
+        /* FOOTER */
+        /* ══════════════════════════════════════════════ */
+        footer {
+            background: #1e293b;
+            color: rgba(255,255,255,0.8);
+            padding: 60px 60px 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+        
+        .footer-brand .logo {
+            color: white;
+            margin-bottom: 16px;
+        }
+        
+        .footer-desc {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            opacity: 0.7;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary);
+        }
+        
+        .footer-col h4 {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .footer-col a {
+            display: block;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        
+        .footer-col a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+        
+        /* ══════════════════════════════════════════════ */
+        /* UTILITY CLASSES */
+        /* ══════════════════════════════════════════════ */
+        .page {
+            display: none;
+        }
+        
+        .page.show {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            nav, .hero, .promo-banner, .quick-links, .destinations, footer,
+            .results-page, .dashboard-page {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            
+            .nav-menu, .nav-buttons {
+                display: none;
+            }
+            
+            .search-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                position: static;
+            }
+            
+            .result-item {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- HEADER -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<header>
+    <div class="top-bar">
+        🎁 FLAT 15% Off on Hotels | Use Code: HOTEL15 | Limited Time Offer
+    </div>
+    <nav>
+        <div class="logo" onclick="showHome()">
+            ✈️ PlanYourTrip
+        </div>
+        <div class="nav-menu">
+            <a class="nav-link" onclick="showHome()">Home</a>
+            <a class="nav-link">Flights</a>
+            <a class="nav-link">Hotels</a>
+            <a class="nav-link">Holiday Packages</a>
+            <a class="nav-link">My Trips</a>
+            <a class="nav-link">Offers</a>
+        </div>
+        <div class="nav-buttons">
+            <button class="btn btn-outline" id="loginBtn" onclick="openModal('loginModal')">Login</button>
+            <button class="btn btn-primary" id="signupBtn" onclick="openModal('signupModal')">Sign Up</button>
+            <button class="btn btn-primary" id="userBtn" style="display:none;" onclick="showDashboard()">
+                <span id="userName">User</span> ▾
+            </button>
+        </div>
+    </nav>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- HOME PAGE -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="page show" id="homePage">
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Your <em>Dream Trip</em><br>Starts Here</h1>
+            <p class="hero-subtitle">Flights · Hotels · Packages · Trains · Buses — All in One Place</p>
+            
+            <!-- SEARCH BOX -->
+            <div class="search-container">
+                <div class="search-tabs">
+                    <button class="search-tab active" onclick="switchTab(0, this)">
+                        ✈️ Flights
+                    </button>
+                    <button class="search-tab" onclick="switchTab(1, this)">
+                        🏨 Hotels
+                    </button>
+                    <button class="search-tab" onclick="switchTab(2, this)">
+                        🌴 Holiday Packages
+                    </button>
+                    <button class="search-tab" onclick="switchTab(3, this)">
+                        🚂 Trains
+                    </button>
+                    <button class="search-tab" onclick="switchTab(4, this)">
+                        🚌 Buses
+                    </button>
+                </div>
+                
+                <!-- FLIGHTS FORM -->
+                <div class="search-form active" id="form0">
+                    <div class="trip-type">
+                        <label><input type="radio" name="tripType" checked> One Way</label>
+                        <label><input type="radio" name="tripType"> Round Trip</label>
+                        <label><input type="radio" name="tripType"> Multi City</label>
+                    </div>
+                    <div class="search-grid">
+                        <div class="form-group">
+                            <label class="form-label">From</label>
+                            <input type="text" class="form-input" placeholder="Delhi (DEL)" id="flightFrom">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">To</label>
+                            <input type="text" class="form-input" placeholder="Mumbai (BOM)" id="flightTo">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Departure</label>
+                            <input type="date" class="form-input" id="flightDate">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Travellers</label>
+                            <select class="form-input">
+                                <option>1 Adult, Economy</option>
+                                <option>2 Adults, Economy</option>
+                                <option>1 Adult, Business</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="search-btn" onclick="searchFlights()">🔍 Search Flights</button>
+                </div>
+                
+                <!-- HOTELS FORM -->
+                <div class="search-form" id="form1">
+                    <div class="search-grid">
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label class="form-label">City, Area or Hotel</label>
+                            <input type="text" class="form-input" placeholder="Mumbai">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Check In</label>
+                            <input type="date" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Check Out</label>
+                            <input type="date" class="form-input">
+                        </div>
+                    </div>
+                    <button class="search-btn" onclick="searchHotels()">🔍 Search Hotels</button>
+                </div>
+                
+                <!-- PACKAGES FORM -->
+                <div class="search-form" id="form2">
+                    <div class="search-grid">
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label class="form-label">Destination</label>
+                            <input type="text" class="form-input" placeholder="Where do you want to go?">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Duration</label>
+                            <select class="form-input">
+                                <option>3 Nights</option>
+                                <option>5 Nights</option>
+                                <option>7 Nights</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="search-btn">🔍 Search Packages</button>
+                </div>
+                
+                <!-- TRAINS FORM -->
+                <div class="search-form" id="form3">
+                    <div class="search-grid">
+                        <div class="form-group">
+                            <label class="form-label">From Station</label>
+                            <input type="text" class="form-input" placeholder="New Delhi">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">To Station</label>
+                            <input type="text" class="form-input" placeholder="Mumbai">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Class</label>
+                            <select class="form-input">
+                                <option>Sleeper</option>
+                                <option>3A - AC 3-Tier</option>
+                                <option>2A - AC 2-Tier</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="search-btn">🔍 Search Trains</button>
+                </div>
+                
+                <!-- BUSES FORM -->
+                <div class="search-form" id="form4">
+                    <div class="search-grid">
+                        <div class="form-group">
+                            <label class="form-label">From</label>
+                            <input type="text" class="form-input" placeholder="Delhi">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">To</label>
+                            <input type="text" class="form-input" placeholder="Agra">
+                        </div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-input">
+                        </div>
+                    </div>
+                    <button class="search-btn">🔍 Search Buses</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- PROMO BANNER -->
+    <div class="promo-banner">
+        <div class="promo-scroll">
+            <div class="promo-item">🎁 FLAT 15% Off on Hotels <span class="promo-badge">NEW</span></div>
+            <div class="promo-item">✈️ Flights from ₹999</div>
+            <div class="promo-item">🌴 Goa Package at ₹7,999 <span class="promo-badge">HOT</span></div>
+            <div class="promo-item">🚂 Train Booking Open for Summer</div>
+            <div class="promo-item">🏨 Free Breakfast Included <span class="promo-badge">DEAL</span></div>
+            <div class="promo-item">💳 Extra 10% cashback on HDFC Cards</div>
+            <!-- Duplicate for seamless loop -->
+            <div class="promo-item">🎁 FLAT 15% Off on Hotels <span class="promo-badge">NEW</span></div>
+            <div class="promo-item">✈️ Flights from ₹999</div>
+            <div class="promo-item">🌴 Goa Package at ₹7,999 <span class="promo-badge">HOT</span></div>
+            <div class="promo-item">🚂 Train Booking Open for Summer</div>
+        </div>
+    </div>
+    
+    <!-- LOYALTY SECTION (shown only when logged in) -->
+    <div class="loyalty-section" id="loyaltySection">
+        <div class="loyalty-content">
+            <div class="loyalty-info">
+                <h3>🏆 Your Loyalty Points</h3>
+                <div class="points-display">2,450 pts</div>
+                <p>₹245 worth of savings!</p>
+                <div class="tier-progress">
+                    <div class="tier-bar"></div>
+                </div>
+                <p style="margin-top: 8px; font-size: 0.9rem; opacity: 0.8;">Next tier: Silver at 5,000</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- QUICK LINKS -->
+    <section class="quick-links">
+        <h2 class="section-title">What are you looking for?</h2>
+        <div class="links-grid">
+            <div class="link-card"><div class="link-icon">✈️</div><div class="link-title">Flights</div></div>
+            <div class="link-card"><div class="link-icon">🏨</div><div class="link-title">Hotels</div></div>
+            <div class="link-card"><div class="link-icon">🌴</div><div class="link-title">Packages</div></div>
+            <div class="link-card"><div class="link-icon">🚂</div><div class="link-title">Trains</div></div>
+            <div class="link-card"><div class="link-icon">🚌</div><div class="link-title">Buses</div></div>
+            <div class="link-card"><div class="link-icon">🚕</div><div class="link-title">Cabs</div></div>
+            <div class="link-card"><div class="link-icon">📄</div><div class="link-title">Visa Info</div></div>
+            <div class="link-card"><div class="link-icon">🎒</div><div class="link-title">Activities</div></div>
+        </div>
+    </section>
+    
+    <!-- DESTINATIONS -->
+    <section class="destinations">
+        <h2 class="section-title">🌍 Popular Destinations</h2>
+        <div class="dest-grid">
+            <div class="dest-card">
+                <img class="dest-img" src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=400" alt="Goa">
+                <div class="dest-badge">TRENDING</div>
+                <div class="dest-info">
+                    <div class="dest-name">Goa</div>
+                    <div class="dest-price">From ₹7,999</div>
+                </div>
+            </div>
+            <div class="dest-card">
+                <img class="dest-img" src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400" alt="Dubai">
+                <div class="dest-badge">HOT</div>
+                <div class="dest-info">
+                    <div class="dest-name">Dubai</div>
+                    <div class="dest-price">From ₹28,000</div>
+                </div>
+            </div>
+            <div class="dest-card">
+                <img class="dest-img" src="https://images.unsplash.com/photo-1559825481-12a05cc00344?w=400" alt="Manali">
+                <div class="dest-info">
+                    <div class="dest-name">Manali</div>
+                    <div class="dest-price">From ₹12,999</div>
+                </div>
+            </div>
+            <div class="dest-card">
+                <img class="dest-img" src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400" alt="Kerala">
+                <div class="dest-info">
+                    <div class="dest-name">Kerala</div>
+                    <div class="dest-price">From ₹15,999</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- RESULTS PAGE -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="results-page" id="resultsPage">
+    <div class="results-container">
+        <!-- FILTERS -->
+        <aside class="filters">
+            <h3 style="margin-bottom: 24px; font-weight: 700;">🔧 Filters</h3>
+            
+            <div class="filter-section">
+                <div class="filter-title">Airlines</div>
+                <label class="filter-option">
+                    <input type="checkbox"> IndiGo
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> Air India
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> Vistara
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> SpiceJet
+                </label>
+            </div>
+            
+            <div class="filter-section">
+                <div class="filter-title">Stops</div>
+                <label class="filter-option">
+                    <input type="checkbox"> Non-stop
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> 1 Stop
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> 2+ Stops
+                </label>
+            </div>
+            
+            <div class="filter-section">
+                <div class="filter-title">Departure Time</div>
+                <label class="filter-option">
+                    <input type="checkbox"> Early Morning (12–6 AM)
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> Morning (6–12 PM)
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> Afternoon (12–6 PM)
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox"> Evening (6–12 PM)
+                </label>
+            </div>
+            
+            <button class="btn btn-primary" style="width: 100%; margin-top: 12px;">Apply Filters</button>
+        </aside>
+        
+        <!-- RESULTS -->
+        <main class="results-main">
+            <div class="results-header">
+                <div>
+                    <h2 class="results-title">Available Flights</h2>
+                    <p class="results-count" id="resultsCount">12 results found</p>
+                </div>
+                <select class="sort-select">
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                    <option>Duration: Shortest</option>
+                    <option>Rating: Highest</option>
+                </select>
+            </div>
+            
+            <div id="resultsContainer">
+                <!-- Results will be inserted here -->
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- DASHBOARD PAGE -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="dashboard-page" id="dashboardPage">
+    <div class="dashboard-header">
+        <h2 class="dashboard-title">My Dashboard</h2>
+        <p style="color: var(--gray);">Manage your bookings and profile</p>
+    </div>
+    
+    <div class="dashboard-tabs">
+        <button class="dashboard-tab active" onclick="switchDashTab(0, this)">My Bookings</button>
+        <button class="dashboard-tab" onclick="switchDashTab(1, this)">Profile</button>
+        <button class="dashboard-tab" onclick="switchDashTab(2, this)">Wallet</button>
+    </div>
+    
+    <div id="dashContent0" class="dash-content">
+        <div id="bookingsContainer" class="bookings-grid">
+            <!-- Bookings will be inserted here -->
+        </div>
+    </div>
+    
+    <div id="dashContent1" class="dash-content" style="display:none;">
+        <div style="background: white; padding: 40px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 16px;">👤</div>
+            <h3 style="margin-bottom: 8px;">Profile Settings</h3>
+            <p style="color: var(--gray);">Manage your personal information</p>
+        </div>
+    </div>
+    
+    <div id="dashContent2" class="dash-content" style="display:none;">
+        <div style="background: white; padding: 40px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 16px;">💰</div>
+            <h3 style="margin-bottom: 8px;">Wallet</h3>
+            <p style="color: var(--gray);">Add money for instant refunds</p>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- LOGIN MODAL -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="modal" id="loginModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('loginModal')">×</button>
+        <div class="modal-header">
+            <h2 class="modal-title">Login</h2>
+            <p class="modal-subtitle">Welcome back! Login to continue</p>
+        </div>
+        <div class="modal-body">
+            <form class="modal-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Email or Mobile</label>
+                    <input type="text" class="form-input" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+            <div class="social-login">
+                <button class="social-btn">🔵 Google</button>
+                <button class="social-btn">📘 Facebook</button>
+            </div>
+            <div class="modal-footer">
+                Don't have an account? <a href="#" onclick="switchModal('signupModal')">Sign up</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SIGNUP MODAL -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="modal" id="signupModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('signupModal')">×</button>
+        <div class="modal-header">
+            <h2 class="modal-title">Sign Up</h2>
+            <p class="modal-subtitle">Create your account</p>
+        </div>
+        <div class="modal-body">
+            <form class="modal-form" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" id="signupName" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="signupPassword" required>
+                </div>
+                <button type="submit" class="btn btn-accent" style="width: 100%;">Create Account</button>
+            </form>
+            <div class="modal-footer">
+                Already have an account? <a href="#" onclick="switchModal('loginModal')">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- BOOKING MODAL -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="modal" id="bookingModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('bookingModal')">×</button>
+        <div class="modal-header">
+            <h2 class="modal-title">Complete Booking</h2>
+            <p class="modal-subtitle">Review your booking details</p>
+        </div>
+        <div class="modal-body" id="bookingDetails">
+            <!-- Booking details will be inserted here -->
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SUCCESS MODAL -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="modal" id="successModal">
+    <div class="modal-content" style="text-align: center;">
+        <div class="modal-body" style="padding: 60px 40px;">
+            <div style="font-size: 4rem; margin-bottom: 20px;">🎉</div>
+            <h2 style="font-size: 2rem; margin-bottom: 12px;">Booking Confirmed!</h2>
+            <p style="color: var(--gray); margin-bottom: 8px;">Booking ID: <strong>PYT-2024-<span id="bookingId"></span></strong></p>
+            <p style="color: var(--gray); margin-bottom: 32px;">A confirmation has been sent to your email</p>
+            <button class="btn btn-primary" onclick="closeModal('successModal'); showDashboard();">View My Trips</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- TOAST NOTIFICATION -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="toast" id="toast">
+    <div class="toast-icon">✅</div>
+    <div class="toast-content">
+        <h4 id="toastTitle">Success</h4>
+        <p id="toastMessage">Operation completed</p>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- FOOTER -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <div class="logo">✈️ PlanYourTrip</div>
+            <p class="footer-desc">India's most trusted travel platform. Book flights, hotels, trains, buses & holiday packages at best prices with 24/7 customer support.</p>
+            <div class="footer-social">
+                <div class="social-icon">f</div>
+                <div class="social-icon">𝕏</div>
+                <div class="social-icon">in</div>
+                <div class="social-icon">📸</div>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <a href="#">About Us</a>
+            <a href="#">Careers</a>
+            <a href="#">Media</a>
+            <a href="#">Blog</a>
+        </div>
+        <div class="footer-col">
+            <h4>Support</h4>
+            <a href="#">Help Center</a>
+            <a href="#">Cancel Booking</a>
+            <a href="#">Refund Status</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Cookie Policy</a>
+            <a href="#">Sitemap</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © 2024 PlanYourTrip. All Rights Reserved.
+    </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let currentUser = null;
+let userBookings = [];
+
+const flightResults = [
+    { id: 'F1', airline: 'IndiGo', icon: '✈️', from: 'DEL', to: 'BOM', dep: '06:00', arr: '08:15', dur: '2h 15m', price: 4599, type: 'Non-stop' },
+    { id: 'F2', airline: 'Air India', icon: '✈️', from: 'DEL', to: 'BOM', dep: '09:30', arr: '11:45', dur: '2h 15m', price: 5299, type: 'Non-stop' },
+    { id: 'F3', airline: 'Vistara', icon: '✈️', from: 'DEL', to: 'BOM', dep: '14:00', arr: '16:20', dur: '2h 20m', price: 6499, type: 'Non-stop' },
+    { id: 'F4', airline: 'SpiceJet', icon: '✈️', from: 'DEL', to: 'BOM', dep: '18:45', arr: '21:00', dur: '2h 15m', price: 3999, type: 'Non-stop' },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════════
+function showHome() {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
+    document.getElementById('homePage').classList.add('show');
+    window.scrollTo(0, 0);
+}
+
+function showResults() {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
+    document.getElementById('resultsPage').classList.add('show');
+    window.scrollTo(0, 0);
+}
+
+function showDashboard() {
+    if (!currentUser) {
+        openModal('loginModal');
+        return;
+    }
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
+    document.getElementById('dashboardPage').classList.add('show');
+    renderBookings();
+    window.scrollTo(0, 0);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// TAB SWITCHING
+// ═══════════════════════════════════════════════════════════════
+function switchTab(index, btn) {
+    document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.search-form').forEach((f, i) => {
+        f.classList.toggle('active', i === index);
+    });
+}
+
+function switchDashTab(index, btn) {
+    document.querySelectorAll('.dashboard-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.dash-content').forEach((c, i) => {
+        c.style.display = i === index ? 'block' : 'none';
+    });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════════════════════════
+function openModal(id) {
+    document.getElementById(id).classList.add('show');
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove('show');
+}
+
+function switchModal(id) {
+    closeModal('loginModal');
+    closeModal('signupModal');
+    openModal(id);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════════════════════════
+function handleLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    currentUser = { name: email.split('@')[0], email };
+    
+    document.getElementById('loginBtn').style.display = 'none';
+    document.getElementById('signupBtn').style.display = 'none';
+    document.getElementById('userBtn').style.display = 'block';
+    document.getElementById('userName').textContent = currentUser.name;
+    document.getElementById('loyaltySection').classList.add('show');
+    
+    closeModal('loginModal');
+    showToast('Login Successful', `Welcome back, ${currentUser.name}!`);
+}
+
+function handleSignup(e) {
+    e.preventDefault();
+    const name = document.getElementById('signupName').value;
+    const email = document.getElementById('signupEmail').value;
+    currentUser = { name, email };
+    
+    document.getElementById('loginBtn').style.display = 'none';
+    document.getElementById('signupBtn').style.display = 'none';
+    document.getElementById('userBtn').style.display = 'block';
+    document.getElementById('userName').textContent = name;
+    document.getElementById('loyaltySection').classList.add('show');
+    
+    closeModal('signupModal');
+    showToast('Account Created', `Welcome, ${name}!`);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SEARCH
+// ═══════════════════════════════════════════════════════════════
+function searchFlights() {
+    showResults();
+    renderFlightResults();
+}
+
+function searchHotels() {
+    showToast('Coming Soon', 'Hotel search will be available soon!');
+}
+
+function renderFlightResults() {
+    const container = document.getElementById('resultsContainer');
+    container.innerHTML = flightResults.map(f => `
+        <div class="result-item">
+            <div class="result-logo">${f.icon}</div>
+            <div class="result-details">
+                <h4>${f.airline}</h4>
+                <div class="result-meta">
+                    <span>${f.dep} - ${f.arr}</span>
+                    <span>•</span>
+                    <span>${f.dur}</span>
+                    <span>•</span>
+                    <span>${f.type}</span>
+                </div>
+            </div>
+            <div class="result-price">
+                <div class="price-value">₹${f.price.toLocaleString()}</div>
+                <button class="book-btn" onclick='bookFlight(${JSON.stringify(f)})'>Book Now</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BOOKING
+// ═══════════════════════════════════════════════════════════════
+function bookFlight(flight) {
+    if (!currentUser) {
+        openModal('loginModal');
+        return;
+    }
+    
+    const details = document.getElementById('bookingDetails');
+    details.innerHTML = `
+        <div style="background: #f8fafc; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <span style="color: var(--gray);">Airline:</span>
+                <strong>${flight.airline}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <span style="color: var(--gray);">Route:</span>
+                <strong>${flight.from} → ${flight.to}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <span style="color: var(--gray);">Departure:</span>
+                <strong>${flight.dep}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--gray);">Arrival:</span>
+                <strong>${flight.arr}</strong>
+            </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-top: 2px solid #e2e8f0;">
+            <span style="font-size: 1.1rem; font-weight: 600;">Total:</span>
+            <span style="font-size: 1.8rem; font-weight: 700; color: var(--primary);">₹${flight.price.toLocaleString()}</span>
+        </div>
+        <button class="btn btn-primary" style="width: 100%;" onclick='confirmBooking(${JSON.stringify(flight)})'>Confirm & Pay</button>
+    `;
+    openModal('bookingModal');
+}
+
+function confirmBooking(flight) {
+    const booking = {
+        id: Date.now(),
+        type: 'flight',
+        data: flight,
+        date: new Date().toLocaleDateString(),
+        status: 'confirmed'
+    };
+    
+    userBookings.push(booking);
+    closeModal('bookingModal');
+    
+    document.getElementById('bookingId').textContent = booking.id;
+    openModal('successModal');
+}
+
+function renderBookings() {
+    const container = document.getElementById('bookingsContainer');
+    
+    if (userBookings.length === 0) {
+        container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; background: white; border-radius: 12px;">
+                <div style="font-size: 3rem; margin-bottom: 16px;">🎫</div>
+                <h3 style="margin-bottom: 8px;">No Bookings Yet</h3>
+                <p style="color: var(--gray); margin-bottom: 24px;">Start exploring and book your first trip!</p>
+                <button class="btn btn-primary" onclick="showHome()">Browse Deals</button>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = userBookings.map(b => {
+        const f = b.data;
+        return `
+            <div class="booking-card">
+                <div class="booking-header">
+                    <span class="booking-type type-flight">FLIGHT</span>
+                    <span class="booking-status status-confirmed">CONFIRMED</span>
+                </div>
+                <div class="booking-info">
+                    <h4>${f.from} → ${f.to}</h4>
+                    <div class="booking-detail">
+                        <span style="color: var(--gray);">Airline:</span>
+                        <strong>${f.airline}</strong>
+                    </div>
+                    <div class="booking-detail">
+                        <span style="color: var(--gray);">Date:</span>
+                        <strong>${b.date}</strong>
+                    </div>
+                    <div class="booking-detail">
+                        <span style="color: var(--gray);">Time:</span>
+                        <strong>${f.dep} - ${f.arr}</strong>
+                    </div>
+                    <div class="booking-price">₹${f.price.toLocaleString()}</div>
+                    <div class="booking-actions">
+                        <button class="btn btn-outline btn-small">View Details</button>
+                        <button class="btn btn-outline btn-small" style="border-color: var(--danger); color: var(--danger);" onclick="cancelBooking('${b.id}')">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function cancelBooking(id) {
+    if (confirm('Cancel this booking?')) {
+        userBookings = userBookings.filter(b => b.id != id);
+        renderBookings();
+        showToast('Booking Cancelled', 'Your booking has been cancelled');
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════════════════
+function showToast(title, message) {
+    document.getElementById('toastTitle').textContent = title;
+    document.getElementById('toastMessage').textContent = message;
+    document.getElementById('toast').classList.add('show');
+    setTimeout(() => {
+        document.getElementById('toast').classList.remove('show');
+    }, 3000);
+}
+
+// Set default date
+document.addEventListener('DOMContentLoaded', () => {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('flightDate').value = today;
+});
+</script>
+
+</body>
+</html>
